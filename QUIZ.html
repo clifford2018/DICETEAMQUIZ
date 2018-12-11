@@ -1,0 +1,319 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-beta1/jquery.min.js"></script>
+<script type="text/javascript" src="quiz.js" async></script>
+
+<script>
+$("h3").hide();
+$("h4").hide();
+$("h6").hide(); // found how to do this at https://codepen.io/Simcode/pen/GZGZeY//
+$(".pic").hide();
+$("#retryButton").hide();
+$("correct").hide();
+$("wrong").hide();
+function sfondo(color) {
+  document.body.style.background = color;
+};
+$(document).ready(function() {
+   $("#ask1").show();
+   var correctPoints = 0;
+   var counter = 10;
+   var arr = [];
+   var tot = "";
+   var num = 1;
+   var solutions = ["False", "False", "True", "False", "True", "True", "True", "False", "False", "False"];
+   var interval = setInterval(function() {
+     counter -= 1;
+     $("#time").text(counter);
+     if (counter == 6){
+       $("#timer").css("color", "yellow");
+     }
+     if (counter == 0 && num<=10) {
+       $("button").hide();
+       $("h3").hide();
+       $("#time").hide();
+       $("h1").hide();
+       $("#questionMark").hide();
+       $("#timeout").show();
+       $("#retryButton").show();
+       sfondo("black");
+     } //set timeout
+   }, 1000); //set interval
+   //false section start
+   $("#F").click(function() {
+     arr.push("False");
+     $("#ans" + num).text("False");
+     counter = 10;
+     num += 1;
+     tot = "ask" + num;
+     if (num <= 10) {
+       $(".question").hide();
+       $("#" + tot).show();
+     } //if continue
+     else {
+       $("button").hide();
+       $("#time").hide();
+       $("h3").show();//domande
+       $("h4").show();//risposte date e titoli
+       $("#retryButton").show();
+       for (var i = 0; i < arr.length; i++) {
+         if (arr[i] === solutions[i]) {
+           $("#correct" + i).show();
+           correctPoints += 1;
+         } //if show correct solutions
+         else {
+           $("#wrong" + i).show();
+         }//else show wrong solutions
+        $("#score").text("Score: " + correctPoints + "/10");
+       }//for
+     if (correctPoints >=8) {
+         $("#good").show();
+       sfondo ("linear-gradient(to top, rgba(60,70,200,0.6), rgba(0,150,0,0.5))");
+        }
+       else if (correctPoints >4 && correctPoints <8) {
+         $("#normal").show();
+         sfondo ("linear-gradient(to top, rgba(200,200,0,0.6), rgba(0,150,0,0.5)");
+       }
+       else {
+         $("#loser").show();
+         sfondo ("linear-gradient(to top, rgba(160,0,0,0.6), rgba(0,150,0,0.5)");
+       }
+     }//else test complete
+   });
+   //true section start
+   $("#V").click(function() {
+       arr.push("True");
+       $("#ans" + num).text("True");
+       num += 1;
+       tot = "ask" + num;
+       counter = 10;
+       if (num <= 10) {
+         $(".question").hide();
+         $("#" + tot).show();
+       } //if continue
+       else {
+        $("button").hide();
+        $("#time").hide();
+        $("h3").show();
+        $("h4").show();
+        $("#retryButton").show();
+        for (var i = 0; i < arr.length; i++) {
+          if (arr[i] === solutions[i]) {
+             $("#correct" + i).show();
+             correctPoints += 1;
+              } //if show correct solutions
+          else {
+             $("#wrong" + i).show();
+          } // else show wrong solutions
+         $("#score").text("Score " + correctPoints + " /10");
+          } //for
+     if (correctPoints >=8) {
+         $("#good").show();
+       sfondo ("linear-gradient(to top, rgba(60,70,200,0.6), rgba(0,150,0,0.5))");
+        }
+       else if (correctPoints >4 && correctPoints <8) {
+         $("#normal").show();
+         sfondo ("linear-gradient(to top, rgba(200,200,0,0.6), rgba(0,150,0,0.5)");
+       }
+       else {
+         $("#loser").show();
+         sfondo ("linear-gradient(to top, rgba(160,0,0,0.6), rgba(0,150,0,0.5)");
+       }
+       }// else test complete
+   }) //V click
+$('#retryButton').click(function() {
+location.reload(false);
+});
+ }) //document ready
+</script>
+<style>
+#questionMark {
+ width: 200px;
+}
+#V {
+ color: #050;
+}
+#F {
+ color: #800;
+}
+.wrong {
+ width: 39px;
+ margin: 3px;
+}
+.correct {
+ width: 41px;
+ margin: 2px;
+}
+.timer{
+ width: 120px;
+ margin: auto;
+ round-borders: 50%;
+ background-color: lightblue;
+}
+body {
+ background-color: lightgrey;
+ background: linear-gradient(to right, green, red);
+ background: linear-gradient(to right, rgba(0,200,0,0.6), rgba(200,0,0,0.8));
+ }
+ h1 {
+  color: #1E80Fe;
+  font-family: Agency FB, Courier;
+  font-size: 110px;
+ }
+h3 {
+ text-align: left;
+ font-size: 30px;
+}
+ h4 {
+  font-size: 30px;
+  margin-top: 20px;
+ }
+ h5{
+  margin-top: 6px;
+  font-size: 28px;
+ }
+h6 {
+ font-size: 24px;
+ color: #000;
+}
+ .colomn-title {
+  text-align: center;
+  font-family: Comic Sans, Script;
+  color: #251;
+ }
+ button {
+   size: 100px;
+   margin: 10px;
+   width: 200px;
+   padding: 10px;
+   font-size: 30px;
+   font-family: Impact;
+ }
+ p {
+  color: red;
+  font-size: 40px;
+ }
+ #timeout {
+  color: red;
+  font-family: Agency FB, Courier;
+  font-size: 110px;
+  margin: 40 px;
+ }
+#retryButton {
+ background-color: yellow;
+ width: 130px;
+ padding: 2px;
+ color: #1E80Fe;
+ float: right;
+ border-color: #f90;
+ border-width: 13px;
+}
+</style>
+<link rel="stylesheet" type="text/css" href="quiz.css">
+
+
+<div class="text-center">
+ <h1><b>TEST YOUR OTHELLO KNOWLEDGE</b>
+  <br><img id="questionMark" src="http://www.grammaruntied.com/blog/wp-content/uploads/2013/07/question-mark-md.png"></h1>
+ <h4 id="score">/10</h4>
+</div>
+<div class="container-fluid">
+ <div class=row>
+   <div class="col-md-7">
+     <h3 class="colomn-title">QUESTIONS</h3>
+   </div>
+   <div class="col-md-3">
+     <h4 style="text-align: right" class="colomn-title">YOUR ANSWERS</h4>
+   </div>
+   <div class="col-md-2">
+     <h4 class="pic colomn-title">RESULTS</h4>
+   </div>
+ </div>
+ <div class=row>
+   <div class="col-md-9">
+     <h3 class="question" id="ask1"><b>1:</b> The tragedy of othello is set in Ireland.</h3>
+     <h3 class="question" id="ask2"><b>2:</b> Othello is often called the bore of Venice because he isn't very fun.</h3>
+     <h3 class="question" id="ask3"><b>3:</b> Desdemona is married to Othello.</h3>
+     <h3 class="question" id="ask4"><b>4:</b> Brabantio is the mother of Desdemona.</h3>
+     <h3 class="question" id="ask5"><b>5:</b> Iago says to Othello "O, beware, my lord, of jealousy;
+                                                 It is the green-ey'd monster, which doth mock
+                                                 The meat it feeds on. That cuckold lives in bliss,
+                                                 Who, certain of his fate, loves not his wronger:
+                                                 But O, what damnèd minutes tells he o'er
+                                                 Who dotes, yet doubts, suspects, yet strongly loves!".</h3>
+     <h3 class="question" id="ask6"><b>6:</b> William Shakespeare wrote this play.</h3>
+     <h3 class="question" id="ask7"><b>7:</b> The opening scene to the play is set in Venice.</h3>
+     <h3 class="question" id="ask8"><b>8:</b> The online dating app "Tinder" is where Othello and Desdemona met and this is mentioned in the first scene.</h3>
+     <h3 class="question" id="ask9"><b>9:</b> Desdemona is referred to as an "Old black ram" in the play.</h3>
+     <h3 class="question" id="ask10"><b>10:</b> Iago is the hero.</h3>
+   </div>
+   <div class="col-md-2">
+     <h4 id="ans1">Answer1</h4>
+     <h4 id="ans2">Answer2</h4>
+     <h4 id="ans3">Answer3</h4>
+     <h4 id="ans4">Answer4</h4>
+     <h4 id="ans5">Answer5</h4>
+     <h4 id="ans6">Answer6</h4>
+     <h4 id="ans7">Answer7</h4>
+     <h4 id="ans8">Answer8</h4>
+     <h4 id="ans9">Answer9</h4>
+     <h4 id="ans10">Answer10</h4>
+   </div>
+   <div class="col-md-1">
+     <h5>
+     <img class="pic correct" id="correct0" src="http://2012.igem.org/wiki/images/8/85/Amsterdam_checkmark.png" alt="Right!">
+     <img class="pic wrong" id="wrong0" src="http://icons.iconarchive.com/icons/iconarchive/red-orb-alphabet/256/Letter-X-icon.png" alt="Wrong!">
+   </h5>
+     <h5>
+     <img class="pic correct" id="correct1" src="http://2012.igem.org/wiki/images/8/85/Amsterdam_checkmark.png" alt="Right!">
+     <img class="pic wrong" id="wrong1" src="http://icons.iconarchive.com/icons/iconarchive/red-orb-alphabet/256/Letter-X-icon.png" alt="Wrong!">
+   </h5>
+     <h5>
+     <img class="pic correct" id="correct2" src="http://2012.igem.org/wiki/images/8/85/Amsterdam_checkmark.png" alt="Right!">
+     <img class="pic wrong" id="wrong2" src="http://icons.iconarchive.com/icons/iconarchive/red-orb-alphabet/256/Letter-X-icon.png" alt="Wrong!">
+   </h5>
+     <h5>
+     <img class="pic correct" id="correct3" src="http://2012.igem.org/wiki/images/8/85/Amsterdam_checkmark.png" alt="Right!">
+      <img class="pic wrong" id="wrong3" src="http://icons.iconarchive.com/icons/iconarchive/red-orb-alphabet/256/Letter-X-icon.png" alt="Wrong!">
+   </h5>
+     <h5>
+     <img class="pic correct" id="correct4" src="http://2012.igem.org/wiki/images/8/85/Amsterdam_checkmark.png" alt="Right!">
+     <img class="pic wrong" id="wrong4" src="http://icons.iconarchive.com/icons/iconarchive/red-orb-alphabet/256/Letter-X-icon.png" alt="Wrong!">
+   </h5>
+     <h5>
+     <img class="pic correct" id="correct5" src="http://2012.igem.org/wiki/images/8/85/Amsterdam_checkmark.png" alt="Right!">
+     <img class="pic wrong" id="wrong5" src="http://icons.iconarchive.com/icons/iconarchive/red-orb-alphabet/256/Letter-X-icon.png" alt="Wrong!">
+   </h5>
+     <h5>
+     <img class="pic correct" id="correct6" src="http://2012.igem.org/wiki/images/8/85/Amsterdam_checkmark.png" alt="Right!">
+     <img class="pic wrong" id="wrong6" src="http://icons.iconarchive.com/icons/iconarchive/red-orb-alphabet/256/Letter-X-icon.png" alt="Wrong!">
+   </h5>
+     <h5>
+     <img class="pic correct" id="correct7" src="http://2012.igem.org/wiki/images/8/85/Amsterdam_checkmark.png" alt="Right!">
+     <img class="pic wrong" id="wrong7" src="http://icons.iconarchive.com/icons/iconarchive/red-orb-alphabet/256/Letter-X-icon.png" alt="Wrong!">
+   </h5>
+     <h5>
+     <img class="pic correct" id="correct8" src="http://2012.igem.org/wiki/images/8/85/Amsterdam_checkmark.png" alt="Right!">
+     <img class="pic wrong" id="wrong8" src="http://icons.iconarchive.com/icons/iconarchive/red-orb-alphabet/256/Letter-X-icon.png" alt="Wrong!">
+   </h5>
+     <h5>
+     <img class="pic correct" id="correct9" src="http://2012.igem.org/wiki/images/8/85/Amsterdam_checkmark.png" alt="Right!">
+     <img class="pic wrong" id="wrong9" src="http://icons.iconarchive.com/icons/iconarchive/red-orb-alphabet/256/Letter-X-icon.png" alt="Wrong!">
+   </h5>
+   </div>
+ </div>
+ <div class="text-center">
+   <label>
+   <button id="V" class="btn btn-success" name="choise">True</button>
+ </label>
+   <label>
+  <button id="F" class="btn btn-danger" name="choise">False</button>
+</label>
+   <div class="timer">
+     <p id="time">10</p>
+   </div>
+   <h6 id="timeout"><u><strong><abbr title="You failed!!">TIMEOUT!</abbr></strong></u></h6>
+   <h6 id="loser" class="lead"> Shakespeare would be turning in his grave! try again.</h6>
+   <h6 id="normal" class="lead">Good, but not enough. Try again and give the correct answer to all question! You can do it!</h6>
+   <h6 id="good" class="lead">Congratulations! Someone got an A1 in leaving cert English</h6>
+ </div>
+ <button id="retryButton">Retry</button>
+</div>
